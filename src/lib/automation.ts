@@ -38,9 +38,9 @@ export const resolveSettings = (row?: AutomationSettings | null): Settings => ({
 /* ------------------------------ shared writers ----------------------------- */
 
 export async function writeActivity(entry: {
-  actorId?: string | null;
+  actorId?: string | null | undefined;
   entityType: string;
-  entityId?: string | null;
+  entityId?: string | null | undefined;
   action: string;
   description: string;
 }) {
@@ -58,8 +58,8 @@ export async function writeNotification(entry: {
   userId: string;
   type: string;
   title: string;
-  body?: string;
-  link?: string;
+  body?: string | undefined;
+  link?: string | undefined;
 }) {
   // Idempotent: skip when an identical unread notification already exists.
   const { data: existing } = await supabase
@@ -81,14 +81,14 @@ export async function writeNotification(entry: {
 }
 
 export async function writeAutomationLog(entry: {
-  actorId?: string | null;
+  actorId?: string | null | undefined;
   automation: string;
   trigger: string;
   action: string;
-  entityType?: string;
-  entityId?: string | null;
-  result?: "success" | "skipped" | "failed";
-  detail?: string;
+  entityType?: string | undefined;
+  entityId?: string | null | undefined;
+  result?: "success" | "skipped" | "failed" | undefined;
+  detail?: string | undefined;
 }) {
   const { error } = await supabase.from("automation_log").insert({
     actor_id: entry.actorId ?? null,
@@ -106,13 +106,13 @@ export async function writeAutomationLog(entry: {
 /** Creates a task unless an equivalent open task already exists (idempotent). */
 export async function ensureTask(input: {
   title: string;
-  actorId?: string | null;
-  leadId?: string | null;
-  assignedTo?: string | null;
-  priority?: Task["priority"];
-  category?: string;
-  description?: string;
-  dueAt?: string | null;
+  actorId?: string | null | undefined;
+  leadId?: string | null | undefined;
+  assignedTo?: string | null | undefined;
+  priority?: Task["priority"] | undefined;
+  category?: string | undefined;
+  description?: string | undefined;
+  dueAt?: string | null | undefined;
   automation: string;
   trigger: string;
 }): Promise<"created" | "skipped" | "failed"> {
@@ -251,8 +251,8 @@ export async function onLeadStageChanged(input: {
   lead: Lead;
   from: LeadStage;
   to: LeadStage;
-  actorId?: string | null;
-  actorName?: string | null;
+  actorId?: string | null | undefined;
+  actorName?: string | null | undefined;
   settings: Settings;
 }) {
   const { lead, from, to, actorId, actorName, settings } = input;
@@ -280,10 +280,10 @@ export async function onLeadStageChanged(input: {
 
 /** Runs when a demo record is saved: advances the lead + queues outreach work. */
 export async function onDemoSaved(input: {
-  lead?: Lead | null;
+  lead?: Lead | null | undefined;
   demo: Partial<Demo> & { id?: string; lead_id: string };
-  actorId?: string | null;
-  actorName?: string | null;
+  actorId?: string | null | undefined;
+  actorName?: string | null | undefined;
   settings: Settings;
 }) {
   const { lead, demo, actorId, actorName, settings } = input;
@@ -315,7 +315,7 @@ export async function onOutreachSent(input: {
   lead: Lead;
   outreach: Outreach;
   existing: FollowUp[];
-  actorId?: string | null;
+  actorId?: string | null | undefined;
   settings: Settings;
 }) {
   const { lead, outreach, existing, actorId, settings } = input;
@@ -380,9 +380,9 @@ export type NextBestAction = {
   kind: "followup" | "task" | "lead";
   title: string;
   reason: string[];
-  leadId?: string;
-  taskId?: string;
-  followUpId?: string;
+  leadId?: string | undefined;
+  taskId?: string | undefined;
+  followUpId?: string | undefined;
 };
 
 export function nextBestAction(input: {

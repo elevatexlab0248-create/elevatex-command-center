@@ -50,6 +50,105 @@ export type Database = {
         }
         Relationships: []
       }
+      automation_log: {
+        Row: {
+          action: string
+          actor_id: string | null
+          automation: string
+          created_at: string
+          detail: string | null
+          entity_id: string | null
+          entity_type: string | null
+          id: string
+          result: string
+          trigger: string
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          automation: string
+          created_at?: string
+          detail?: string | null
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          result?: string
+          trigger: string
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          automation?: string
+          created_at?: string
+          detail?: string | null
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          result?: string
+          trigger?: string
+        }
+        Relationships: []
+      }
+      automation_settings: {
+        Row: {
+          auto_tasks_enabled: boolean
+          created_at: string
+          demos_target: number
+          deploys_target: number
+          followup_1_days: number
+          followup_2_days: number
+          followup_3_days: number
+          id: string
+          leads_target: number
+          notify_content: boolean
+          notify_followups: boolean
+          notify_task_reminders: boolean
+          notify_team: boolean
+          outreach_target: number
+          stagnation_days: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          auto_tasks_enabled?: boolean
+          created_at?: string
+          demos_target?: number
+          deploys_target?: number
+          followup_1_days?: number
+          followup_2_days?: number
+          followup_3_days?: number
+          id?: string
+          leads_target?: number
+          notify_content?: boolean
+          notify_followups?: boolean
+          notify_task_reminders?: boolean
+          notify_team?: boolean
+          outreach_target?: number
+          stagnation_days?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          auto_tasks_enabled?: boolean
+          created_at?: string
+          demos_target?: number
+          deploys_target?: number
+          followup_1_days?: number
+          followup_2_days?: number
+          followup_3_days?: number
+          id?: string
+          leads_target?: number
+          notify_content?: boolean
+          notify_followups?: boolean
+          notify_task_reminders?: boolean
+          notify_team?: boolean
+          outreach_target?: number
+          stagnation_days?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       calendar_events: {
         Row: {
           content_id: string | null
